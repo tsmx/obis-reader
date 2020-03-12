@@ -1,0 +1,20 @@
+{
+    "database": {
+        "protocol": "mongodb+srv",
+        "server": "YOUR_MONGO_URL",
+        "database": "YOUR_DB",
+        "collection": "YUR_COLLECTION",
+        "options": "?retryWrites=true&w=majority",
+        "user": "YOUR_USER",
+        "password": "YOUR_PW"
+    },
+    "obis": {
+        "protocol": "SmlProtocol",
+        "transport": "SerialResponseTransport",
+        "transportSerialPort": "/dev/ttyUSB0",
+        "transportSerialBaudrate": 9600,
+        "requestInterval": 10,
+        "obisNameLanguage": "en",
+        "obisFallbackMedium": 6
+    }
+}
