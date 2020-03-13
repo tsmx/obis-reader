@@ -16,5 +16,8 @@
         "requestInterval": 10,
         "obisNameLanguage": "en",
         "obisFallbackMedium": 6
+    },
+    "intervals": {
+        "persistValuesInterval": 300
     }
 }

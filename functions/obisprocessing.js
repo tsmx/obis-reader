@@ -1,11 +1,15 @@
 const logger = require('../utils/logging').logger;
 const obis = require('smartmeter-obis');
 const obisconfig = require('../conf/config').obis;
-const obisSchema = require('../schemas/obisSchema');
+const intervalconf = require('../conf/config').intervals;
+const obisValue = require('../schemas/obisValue');
+const obisActual = require('../schemas/obisActual');
 
 const OBIS_DEVID = '1-0:0.0.9';
 const OBIS_POWER_SUM = '1-0:1.8.0';
 const OBIS_POWER_CUR = '1-0:16.7.0'
+
+var processingCounter = 0;
 
 function processData(err, obisResult) {
     if (err) {
@@ -15,27 +19,42 @@ function processData(err, obisResult) {
         logger.error(err);
         return;
     }
-    let obisEntry = new obisSchema();
+    // increase processing counter
+    processingCounter++;
+    // always create obisActual, obisValue only if counter MOD interval = 0
+    let obisActualEntry = new obisActual();
+    let obisValueEntry = null;
+    if (processingCounter % intervalconf.persistValuesInterval == 0) {
+        obisValueEntry = new obisValue();
+        // reset processing counter to 0 for new interval counting
+        processingCounter = 0;
+    }
     for (var obisId in obisResult) {
         let measurement = obisResult[obisId];
         if (measurement.idToString().startsWith(OBIS_DEVID)) {
-            obisEntry.deviceid = measurement.values[0].value;
-        }
-        if (measurement.idToString().startsWith(OBIS_POWER_SUM)) {
-            obisEntry.powerSum = measurement.values[0].value;
-            obisEntry.powerSumUnit = measurement.values[0].unit;
+            obisActualEntry.deviceid = measurement.values[0].value;
         }
         if (measurement.idToString().startsWith(OBIS_POWER_CUR)) {
-            obisEntry.powerCurrent = measurement.values[0].value;
-            obisEntry.powerCurrentUnit = measurement.values[0].unit;
+            obisActualEntry.powerCurrent = measurement.values[0].value;
+            obisActualEntry.powerCurrentUnit = measurement.values[0].unit;
         }
-        logger.info(
-            obisResult[obisId].idToString() + ': ' +
-            obis.ObisNames.resolveObisName(obisResult[obisId], obisconfig.obisNameLanguage).obisName + ' = ' +
-            obisResult[obisId].valueToString()
-        );
+        if (obisValueEntry && measurement.idToString().startsWith(OBIS_POWER_SUM)) {
+            obisValueEntry.powerSum = measurement.values[0].value;
+            obisValueEntry.powerSumUnit = measurement.values[0].unit;
+        }
     }
-    obisEntry.save();
+    if (obisValueEntry) {
+        obisValueEntry.deviceid = obisActualEntry.deviceid;
+        obisValueEntry.powerCurrent = obisActualEntry.powerCurrent;
+        obisValueEntry.powerCurrentUnit = obisActualEntry.powerCurrentUnit
+        obisValueEntry.save();
+        logger.info('ObisValueEntry saved. (DEV_ID: ' + obisValueEntry.deviceid +
+            ' CUR: ' + obisValueEntry.powerCurrent + obisValueEntry.powerCurrentUnit +
+            ' SUM: ' + obisValueEntry.powerSum + obisValueEntry.powerSumUnit + ')');
+    }
+    obisActualEntry.save();
+    logger.info('ObisActualEntry saved. (DEV_ID: ' + obisActualEntry.deviceid +
+        ' CUR: ' + obisActualEntry.powerCurrent + obisActualEntry.powerCurrentUnit + ')');
 }
 
 module.exports = obis.init(obisconfig, processData);
