@@ -3,7 +3,8 @@
         "protocol": "mongodb+srv",
         "server": "YOUR_MONGO_URL",
         "database": "YOUR_DB",
-        "collection": "YUR_COLLECTION",
+        "collectionValues": "YOUR_VALUES_COLLECTION",
+        "collectionActuals": "YOUR_ACTUALS_COLLECTION",
         "options": "?retryWrites=true&w=majority",
         "user": "YOUR_USER",
         "password": "YOUR_PW"
