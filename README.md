@@ -2,7 +2,7 @@
 
 A basic example project demonstrating how to read OBIS data from a smart-meter and saving them into a MongoDB. Including simple steps to ship the solution to a Raspberry Pi and make it run as a systemd service.
 
-OBIS data is read and extractet using the great package [smartmeter-obis](https://www.npmjs.com/package/smartmeter-obis).
+OBIS data is read and extracted using the great package [smartmeter-obis](https://www.npmjs.com/package/smartmeter-obis).
 
 ## Technical Equipment
 
@@ -37,6 +37,9 @@ Two configurations can be used for testing/devolping and production use. For tha
 To run the OBIS reader on a Raspberry I suggest the following steps:
 
 1. Connect to your Raspberry as `pi`
+   ```
+   ssh pi@raspberrypi
+   ```
 2. Create a new user: 
    ```
    sudo adduser obis
@@ -46,10 +49,15 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    sudo usermod -a -G dialout obis
    ```
 4. As user `obis`: create a new directory for the OBIS reader solution `/home/obis/obisreader`
-5. "Ship" the soltion from your developing machine to the Raspberry. This could be easily done using rsync: 
+   ```
+   ssh obis@raspberrypi
+   mkdir obisreader
+   ```
+5. "Ship" the soltion from your develop machine to the Raspberry. This could be easily done using rsync: 
    ```
    rsync -av -e ssh --exclude='node_modules/' ObisReader/ obis@raspberrypi:/home/obis/obisreader
    ```
+   Excluding the node_modules folder saves a LOT of time!
 6. On the Raspberry as user `obis` in `/home/obis/obisreader` run:
    ```
    npm install
@@ -58,7 +66,7 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    ```
    node /home/obis/obisreader/app.js
    ```
-8. Create a service for the app by creating a systemd service file: 
+8. As user `pi` create a service for the app by creating a systemd service file: 
    ```
    sudo nano /lib/systemd/system/obisreader.service
    ```
@@ -83,6 +91,6 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    sudo systemctl start obisreader
    sudo systemctl enable obisreader
    ```
-
+ObisReader is now running as a service.
 
 
