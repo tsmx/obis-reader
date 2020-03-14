@@ -23,14 +23,14 @@ In this example the OBIS data is read into two entities stored in two different 
   - typically stored in a larger interval, e.g. every 5 minutes, specified by the configuration parameter `intervals.persistValuesMinutes`
   - stored without any TTL limit
 
-Two configurations can be used for testing/devolping and production use. For that, create two configuration files under `/conf` following the given example file.
+Two configurations can be used for testing/developing and production use. For that, create two configuration files under `/conf` following the given example file.
 
 - `config-prod.json`
   - used when running with environment parameter `NODE_ENV=production`
 - `config-dev.json`
   - used when `NODE_ENV` is not present or has any other value than `production`
   - hint: define a transport of type `LocalFileTransport` in the development config and use the delivered example SML file under `/test/ed300l.dat` so you don't need a permanent connection to your smart-meter when developing
-  - hint: set `intervals.persistValuesMinutes` to `-1` in a development configuration to ignore this interval and always generate and stored the `obisValue` when reading data
+  - hint: set `intervals.persistValuesMinutes` to `-1` in a development configuration to ignore this interval and always generate and store both - the `obisValue` and `obisActual` - when reading data
 
 ## Running on a Raspberry Pi
 
@@ -44,7 +44,7 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    ```
    sudo adduser obis
    ```
-3. Grant the new user the right to read from the smartmeter connector. For most USB connected readers this is done by adding the user to the group dialout: 
+3. Grant the new user the right to read from the smartmeter connector. For most USB connected readers available under `/dev/ttyUSBx` this is done by adding the user to the group `dialout`: 
    ```
    sudo usermod -a -G dialout obis
    ```
@@ -53,7 +53,7 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    ssh obis@raspberrypi
    mkdir obisreader
    ```
-5. "Ship" the solution from your develop machine to the Raspberry. This could be easily done using rsync: 
+5. "Ship" the solution from your development machine to the Raspberry. This could be easily done using rsync: 
    ```
    rsync -av -e ssh --exclude='node_modules/' ObisReader/ obis@raspberrypi:/home/obis/obisreader
    ```
