@@ -36,29 +36,29 @@ Two configurations can be used for testing/developing and production use. For th
 
 To run the OBIS reader on a Raspberry I suggest the following steps:
 
-1. Connect to your Raspberry as `pi`
+1. Connect to your Raspberry as `pi`.
    ```
    ssh pi@raspberrypi
    ```
-2. Create a new user: 
+2. Create a new user.
    ```
    sudo adduser obis
    ```
-3. Grant the new user the right to read from the smartmeter connector. For most USB connected readers available under `/dev/ttyUSBx` this is done by adding the user to the group `dialout`: 
+3. Grant the new user the right to read from the smartmeter connector. For most USB connected readers available under `/dev/ttyUSBx` this is done by adding the user to the group `dialout`.
    ```
    sudo usermod -a -G dialout obis
    ```
-4. As user `obis` create a new directory for the OBIS reader solution `/home/obis/obisreader`
+4. As user `obis` create a new directory for the OBIS reader solution `/home/obis/obisreader`.
    ```
    ssh obis@raspberrypi
    mkdir obisreader
    ```
-5. "Ship" the solution from your development machine to the Raspberry. This could be easily done using rsync: 
+5. "Ship" the solution from your development machine to the Raspberry. This could be easily done using rsync.
    ```
    rsync -av -e ssh --exclude='node_modules/' ObisReader/ obis@raspberrypi:/home/obis/obisreader
    ```
    Excluding the node_modules folder saves a LOT of time!
-6. On the Raspberry as user `obis` in `/home/obis/obisreader` run:
+6. On the Raspberry as user `obis` in `/home/obis/obisreader` install the needed NodeJS packages.
    ```
    npm install
    ```
@@ -66,7 +66,7 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    ```
    node /home/obis/obisreader/app.js
    ```
-8. As user `pi` create a service for the app by creating a systemd service file: 
+8. As user `pi` create a service for the app by creating a systemd service file.
    ```
    sudo nano /lib/systemd/system/obisreader.service
    ```
@@ -86,7 +86,7 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    [Install]
    WantedBy=multi-user.target
    ```
-9. Start the service and enable it
+9. Start the service and enable it.
    ```
    sudo systemctl start obisreader
    sudo systemctl enable obisreader
