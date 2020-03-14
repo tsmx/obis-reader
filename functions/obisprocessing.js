@@ -9,7 +9,7 @@ const OBIS_DEVID = '1-0:0.0.9';
 const OBIS_POWER_SUM = '1-0:1.8.0';
 const OBIS_POWER_CUR = '1-0:16.7.0'
 
-var processingCounter = 0;
+var lastPersist = null;
 
 function processData(err, obisResult) {
     if (err) {
@@ -19,15 +19,20 @@ function processData(err, obisResult) {
         logger.error(err);
         return;
     }
-    // increase processing counter
-    processingCounter++;
-    // always create obisActual, obisValue only if counter MOD interval = 0
+    // always create obisActual, obisValue only if next persistence interval is reached or not set
     let obisActualEntry = new obisActual();
     let obisValueEntry = null;
-    if (processingCounter % intervalconf.persistValuesInterval == 0) {
+    // logger.info('Last: ' + lastPersist);
+    let testDate = (lastPersist ? new Date(lastPersist.getTime() + (intervalconf.persistValuesMinutes * 60000)) : null);
+    // logger.info('Next: ' + testDate);
+    let currentDate = new Date();
+    // logger.info('Curr: ' + currentDate);
+    if ((intervalconf.persistValuesMinutes == -1) ||
+        (testDate == null) ||
+        (currentDate >= testDate)) {
         obisValueEntry = new obisValue();
-        // reset processing counter to 0 for new interval counting
-        processingCounter = 0;
+        // set last persistence date
+        lastPersist = currentDate;
     }
     for (var obisId in obisResult) {
         let measurement = obisResult[obisId];
