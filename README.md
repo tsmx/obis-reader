@@ -48,12 +48,12 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    ```
    sudo usermod -a -G dialout obis
    ```
-4. As user `obis`: create a new directory for the OBIS reader solution `/home/obis/obisreader`
+4. As user `obis` create a new directory for the OBIS reader solution `/home/obis/obisreader`
    ```
    ssh obis@raspberrypi
    mkdir obisreader
    ```
-5. "Ship" the soltion from your develop machine to the Raspberry. This could be easily done using rsync: 
+5. "Ship" the solution from your develop machine to the Raspberry. This could be easily done using rsync: 
    ```
    rsync -av -e ssh --exclude='node_modules/' ObisReader/ obis@raspberrypi:/home/obis/obisreader
    ```
