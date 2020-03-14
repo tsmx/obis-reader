@@ -2,7 +2,7 @@
 
 A basic example project demonstrating how to read OBIS data from a smart-meter and saving them into a MongoDB. Including simple steps to ship the solution to a Raspberry Pi and make it run as a systemd service.
 
-OBIS data is read and extractet using the great package [smartmeter-obis](https://www.npmjs.com/package/smartmeter-obis).
+OBIS data is read and extracted using the great package [smartmeter-obis](https://www.npmjs.com/package/smartmeter-obis).
 
 ## Technical Equipment
 
