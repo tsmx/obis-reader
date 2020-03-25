@@ -4,6 +4,8 @@ A basic example project demonstrating how to read OBIS data from a smart-meter a
 
 OBIS data is read and extracted using the great package [smartmeter-obis](https://www.npmjs.com/package/smartmeter-obis).
 
+A live example for creating a simple dashboard with the persisted OBIS data can be found here: [PowerBoard](https://powerboard.appspot.com).
+
 ## Technical Equipment
 
 What you need is:
@@ -19,7 +21,7 @@ In this example the OBIS data is read into two entities stored in two different 
   - typically read in a very short interval, e.g. every 3 seconds, specified by the configuration parameter `obis.requestInterval` (please consult the manual of your smart-meter for the lowest possible rates)
   - stored for the last 24 hours in a sliding window (uses MongoDB's TTL index feature)
 - `obisValue`  
-  - current and overall power consumption
+  - current consumption and overall balance
   - typically stored in a larger interval, e.g. every 5 minutes, specified by the configuration parameter `intervals.persistValuesMinutes`
   - stored without any TTL limit
 
@@ -92,5 +94,71 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    sudo systemctl enable obisreader
    ```
 ObisReader is now running as a service.
+
+## Further data usage examples
+
+Using MongoDB's query and aggregation functions a lot of useful analysis of the persisted data can be done. Some useful examples...
+
+Get the average power consumption for each hour of the day: 
+
+```
+obisValues.aggregate(
+   [
+      { $group: 
+         { 
+            _id: { $hour: { date: '$date' } }, 
+            consumptionMeasures: { $sum: 1 }, 
+            consumptionAvg: { $avg: '$powerCurrent' } 
+         } 
+      },
+      { $sort: { _id: 1 } }
+   ],
+   (err, result) => {...});
+```
+
+Get the average power consumption over the last `minutes`: 
+
+```
+obisActuals.aggregate(
+   [
+      { $match: { date: { '$gte': new Date(Date.now() - 1000 * 60 * minutes) } } },
+      { 
+         $group: 
+         { 
+            _id: { $dateToString: { format: '%Y%m%dT%H%M', date: '$date' } },
+            consumptionMeasures: { $sum: 1 }, 
+            consumptionAvg: { $avg: '$powerCurrent' } 
+         } 
+      },
+      { $sort: { _id: -1 } },
+      { $limit: minutes }
+   ],
+   (err, result) => {...});
+```
+
+Get the maximum power consumption of the current day:
+
+```
+let today = new Date();
+today.setHours(0, 0, 0, 0);
+obisActuals
+   .find({ date: { '$gte': today } })
+   .sort({ powerCurrent: -1 })
+   .limit(1)
+   .exec((err, result) => {...});
+```
+
+Get the minimum power consumption of the current day:
+
+```
+let today = new Date();
+today.setHours(0, 0, 0, 0);
+obisActuals
+   .find({ date: { '$gte': today } })
+   .sort({ powerCurrent: 1 })
+   .limit(1)
+   .exec((err, result) => {...});
+```
+
 
 
