@@ -73,13 +73,17 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    With the following content:
    ```
    [Unit]
-   Description=ObisReader - reading and persisteing OBIS data from your smart-meter
+   Description=ObisReader - reading and persisting OBIS data from your smart-meter
    After=network.target
 
    [Service]
    Environment=NODE_ENV="production"
+   # configuration encryption key
+   Environment=CONFIG_ENCRYPTION_KEY="YOUR_KEY"
    Type=simple
    User=obis
+   # set working dir to make secure-config working properly
+   WorkingDirectory=/home/obis/obisreader
    ExecStart=/usr/bin/node /home/obis/obisreader/app.js
    Restart=on-failure
 
