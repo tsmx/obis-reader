@@ -1,13 +1,11 @@
 const logger = require('../utils/logging').logger;
+const conf = require('@tsmx/secure-config');
 
-var conf = null;
-if (process.env.NODE_ENV == 'production') {
-    logger.info('Using configuration config-prod...');
-    conf = require('./config-prod.json');
+if (conf != null) {
+    logger.info('Using configuration ' + conf.name + '...');
 }
 else {
-    logger.info('Using configuration config-dev...');
-    conf = require('./config-dev.json');
+    logger.error('Could not load configuration!');
 }
 
 module.exports = conf;
