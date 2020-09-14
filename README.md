@@ -25,14 +25,12 @@ In this example the OBIS data is read into two entities stored in two different 
   - typically stored in a larger interval, e.g. every 5 minutes, specified by the configuration parameter `intervals.persistValuesMinutes`
   - stored without any TTL limit
 
-Two configurations can be used for testing/developing and production use. For that, create two configuration files under `/conf` following the given example file.
+## Configuration
 
-- `config-prod.json`
-  - used when running with environment parameter `NODE_ENV=production`
-- `config-dev.json`
-  - used when `NODE_ENV` is not present or has any other value than `production`
-  - hint: define a transport of type `LocalFileTransport` in the development config and use the delivered example SML file under `/test/ed300l.dat` so you don't need a permanent connection to your smart-meter when developing
-  - hint: set `intervals.persistValuesMinutes` to `-1` in a development configuration to ignore this interval and always generate and store both - the `obisValue` and `obisActual` - when reading data
+For easy and secure configuration I use [secure-config](https://www.npmjs.com/package/@tsmx/secure-config) in this project. Two configurations can be used for testing/developing and production use. For that, create two configuration files `config.json` and `config-production.json` under `/conf` following the given example file. It is recommended that you encrypt secret credentials like username and password for the database connection. For more details on how to use secure-config also refer to this [article](https://tsmx.net/secure-config/). 
+
+- hint: define a transport of type `LocalFileTransport` in the development config and use the delivered example SML file under `/test/ed300l.dat` so you don't need a permanent connection to your smart-meter when developing
+- hint: set `intervals.persistValuesMinutes` to `-1` in a development configuration to ignore this interval and always generate and store both - the `obisValue` and `obisActual` - when reading data
 
 ## Running on a Raspberry Pi
 

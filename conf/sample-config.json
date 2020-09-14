@@ -1,4 +1,5 @@
 {
+    "name": "DEV|PROD|...",
     "database": {
         "protocol": "mongodb+srv",
         "server": "YOUR_MONGO_URL",
