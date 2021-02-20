@@ -12,8 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "@tsmx/secure-config": "^1.1.2",
-    "mongoose": "^5.9.4",
-    "smartmeter-obis": "^2.1.0",
-    "winston": "^3.2.1"
+    "mongoose": "^5.11.17",
+    "smartmeter-obis": "^2.3.0",
+    "winston": "^3.3.3"
   }
 }
