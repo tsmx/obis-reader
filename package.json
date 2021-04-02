@@ -6,9 +6,12 @@
   "keywords": [
     "smart-meter",
     "obis",
-    "sml"
+    "sml",
+    "mongodb",
+    "raspberry",
+    "systemd service"
   ],
-  "author": "Sebastian Stricker",
+  "author": "tsmx <dev@tsmx.net>",
   "license": "MIT",
   "dependencies": {
     "@tsmx/secure-config": "^1.1.2",
