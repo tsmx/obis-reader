@@ -1,5 +1,5 @@
 {
-  "name": "obisreader",
+  "name": "obis-reader",
   "version": "1.0.0",
   "description": "Read and persist Smart-Meter OBIS data to a mongoDB.",
   "main": "app.js",
