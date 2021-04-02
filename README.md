@@ -102,9 +102,9 @@ ObisReader is now running as a service.
 
 ## Further data usage examples
 
-Using MongoDB's query and aggregation functions a lot of useful analysis of the persisted data can be done. Some useful examples...
+By using MongoDB's query functions and aggregation framewrok, a lot of useful analysis of the persisted data can be done. Some useful examples...
 
-Get the average power consumption for each hour of the day: 
+### Average power consumption for each hour of the day
 
 ```js
 obisValues.aggregate(
@@ -121,7 +121,7 @@ obisValues.aggregate(
    (err, result) => {...});
 ```
 
-Get the average power consumption over the last `minutes`: 
+### Average power consumption over the last x minutes
 
 ```js
 obisActuals.aggregate(
@@ -141,7 +141,7 @@ obisActuals.aggregate(
    (err, result) => {...});
 ```
 
-Get the maximum power consumption of the current day:
+### Maximum power consumption of the current day
 
 ```js
 let today = new Date();
@@ -153,7 +153,7 @@ obisActuals
    .exec((err, result) => {...});
 ```
 
-Get the minimum power consumption of the current day:
+### Minimum power consumption of the current day
 
 ```js
 let today = new Date();
