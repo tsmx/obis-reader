@@ -1,7 +1,7 @@
 # obis-reader
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.com/tsmx/obisreader.svg?branch=master)](https://travis-ci.com/tsmx/obisreader)
+[![Build Status](https://img.shields.io/github/workflow/status/tsmx/obis-reader/git-ci-build)](https://img.shields.io/github/workflow/status/tsmx/obis-reader/git-ci-build)
 
 A basic example project demonstrating how to read OBIS data from a smart-meter and saving them into a MongoDB. Including simple steps to ship the solution to a Raspberry Pi and make it run as a systemd service.
 
@@ -40,41 +40,41 @@ For easy and secure configuration I use [secure-config](https://www.npmjs.com/pa
 To run the OBIS reader on a Raspberry I suggest the following steps:
 
 1. Connect to your Raspberry as `pi`.
-   ```
+   ```bash
    ssh pi@raspberrypi
    ```
 2. Create a new user.
-   ```
+   ```bash
    sudo adduser obis
    ```
 3. Grant the new user the right to read from the smartmeter connector. For most USB connected readers available under `/dev/ttyUSBx` this is done by adding the user to the group `dialout`.
-   ```
+   ```bash
    sudo usermod -a -G dialout obis
    ```
 4. As user `obis` create a new directory for the OBIS reader solution `/home/obis/obisreader`.
-   ```
+   ```bash
    ssh obis@raspberrypi
    mkdir obisreader
    ```
 5. "Ship" the solution from your development machine to the Raspberry. This could be easily done using rsync.
-   ```
+   ```bash
    rsync -av -e ssh --exclude='node_modules/' ObisReader/ obis@raspberrypi:/home/obis/obisreader
    ```
    Excluding the node_modules folder saves a LOT of time!
 6. On the Raspberry as user `obis` in `/home/obis/obisreader` install the needed NodeJS packages.
-   ```
+   ```bash
    npm install
    ```
 7. Do a test run: 
-   ```
+   ```bash
    node /home/obis/obisreader/app.js
    ```
 8. As user `pi` create a service for the app by creating a systemd service file.
-   ```
+   ```bash
    sudo nano /lib/systemd/system/obisreader.service
    ```
    With the following content:
-   ```
+   ```bash
    [Unit]
    Description=ObisReader - reading and persisting OBIS data from your smart-meter
    After=network.target
@@ -94,7 +94,7 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    WantedBy=multi-user.target
    ```
 9. Start the service and enable it.
-   ```
+   ```bash
    sudo systemctl start obisreader
    sudo systemctl enable obisreader
    ```
@@ -106,7 +106,7 @@ Using MongoDB's query and aggregation functions a lot of useful analysis of the 
 
 Get the average power consumption for each hour of the day: 
 
-```
+```js
 obisValues.aggregate(
    [
       { $group: 
@@ -123,7 +123,7 @@ obisValues.aggregate(
 
 Get the average power consumption over the last `minutes`: 
 
-```
+```js
 obisActuals.aggregate(
    [
       { $match: { date: { '$gte': new Date(Date.now() - 1000 * 60 * minutes) } } },
@@ -143,7 +143,7 @@ obisActuals.aggregate(
 
 Get the maximum power consumption of the current day:
 
-```
+```js
 let today = new Date();
 today.setHours(0, 0, 0, 0);
 obisActuals
@@ -155,7 +155,7 @@ obisActuals
 
 Get the minimum power consumption of the current day:
 
-```
+```js
 let today = new Date();
 today.setHours(0, 0, 0, 0);
 obisActuals
