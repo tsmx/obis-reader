@@ -7,8 +7,6 @@ const dbOptions = {
     user: dbconfig.user,
     pass: dbconfig.password,
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
     useUnifiedTopology: true
 };
 
