@@ -11,7 +11,7 @@ const OBIS_POWER_CUR = '1-0:16.7.0'
 
 var lastPersist = null;
 
-function processData(err, obisResult) {
+async function processData(err, obisResult) {
     if (err) {
         // handle error
         // if you want to cancel the processing because of this error call smTransport.stop() before returning
@@ -52,14 +52,24 @@ function processData(err, obisResult) {
         obisValueEntry.deviceid = obisActualEntry.deviceid;
         obisValueEntry.powerCurrent = obisActualEntry.powerCurrent;
         obisValueEntry.powerCurrentUnit = obisActualEntry.powerCurrentUnit
-        obisValueEntry.save();
-        logger.info('ObisValueEntry saved. (DEV_ID: ' + obisValueEntry.deviceid +
-            ' CUR: ' + obisValueEntry.powerCurrent + obisValueEntry.powerCurrentUnit +
-            ' SUM: ' + obisValueEntry.powerSum + obisValueEntry.powerSumUnit + ')');
+        try {
+            let obisValueDoc = await obisValueEntry.save();
+            logger.info('ObisValueEntry saved with ID ' + obisValueDoc.id + '. (DEV_ID: ' + obisValueEntry.deviceid +
+                ' CUR: ' + obisValueEntry.powerCurrent + obisValueEntry.powerCurrentUnit +
+                ' SUM: ' + obisValueEntry.powerSum + obisValueEntry.powerSumUnit + ')');
+        }
+        catch (err) {
+            logger.error(err.message);
+        }
     }
-    obisActualEntry.save();
-    logger.info('ObisActualEntry saved. (DEV_ID: ' + obisActualEntry.deviceid +
-        ' CUR: ' + obisActualEntry.powerCurrent + obisActualEntry.powerCurrentUnit + ')');
+    try {
+        let obisActualDoc = await obisActualEntry.save();
+        logger.info('ObisActualEntry saved with ID ' + obisActualDoc.id + '. (DEV_ID: ' + obisActualEntry.deviceid +
+            ' CUR: ' + obisActualEntry.powerCurrent + obisActualEntry.powerCurrentUnit + ')');
+    }
+    catch (err) {
+        logger.error(err.message);
+    }
 }
 
 module.exports = obis.init(obisconfig, processData);
