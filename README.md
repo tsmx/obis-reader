@@ -30,7 +30,20 @@ In this example the OBIS data is read into two entities stored in two different 
 
 ## Configuration
 
-For easy and secure configuration I use [secure-config](https://www.npmjs.com/package/@tsmx/secure-config) in this project. Two configurations can be used for testing/developing and production use. For that, create two configuration files `config.json` and `config-production.json` under `/conf` following the given example file. It is recommended that you encrypt secret credentials like username and password for the database connection. For more details on how to use secure-config also refer to this [article](https://tsmx.net/secure-config/). 
+The repo comes along with the following configuration files:
+
+```bash
+conf/
+├── config.js                     # small helper for logging out which config is loaded
+├── config.json                   # configuration for dev environment, reading OBIS data from a static file
+└── sample-config-production.json # configuration example for a production config, reading OBIS data from a USB device
+```
+
+With the provided `config.json` you can start obis-reader and it will read OBIS data from the static file `test/ed300l.dat` without the need of having an OBIS device attached to your development machine. `sample-config-production.json` contains a production configuration blueprint for reading OBIS data from an USB device instead of a file.
+
+For easy and secure configuration I use [secure-config](https://www.npmjs.com/package/@tsmx/secure-config) in this project. Different configurations can be used for testing/developing (NODE_ENV not set) and production (NODE_ENV === 'production') use. For that, edit/create two configuration files `config.json` and `config-production.json` under `/conf` following the given example files. It is recommended that you encrypt secret credentials like username and password for the database connection, at least for the production stage. For more details on how to use secure-config also refer to this [article](https://tsmx.net/secure-config/).
+
+
 
 - hint: define a transport of type `LocalFileTransport` in the development config and use the delivered example SML file under `/test/ed300l.dat` so you don't need a permanent connection to your smart-meter when developing
 - hint: set `intervals.persistValuesMinutes` to `-1` in a development configuration to ignore this interval and always generate and store both - the `obisValue` and `obisActual` - when reading data
