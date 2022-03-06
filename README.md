@@ -44,9 +44,7 @@ With the provided `config.json` you can start obis-reader and it will read OBIS 
 For easy and secure configuration I use [secure-config](https://www.npmjs.com/package/@tsmx/secure-config) in this project. Different configurations can be used for testing/developing (NODE_ENV not set) and production (NODE_ENV === 'production') use. For that, edit/create two configuration files `config.json` and `config-production.json` under `/conf` following the given example files. It is recommended that you encrypt secret credentials like username and password for the database connection, at least for the production stage. For more details on how to use secure-config also refer to this [article](https://tsmx.net/secure-config/).
 
 
-
-- hint: define a transport of type `LocalFileTransport` in the development config and use the delivered example SML file under `/test/ed300l.dat` so you don't need a permanent connection to your smart-meter when developing
-- hint: set `intervals.persistValuesMinutes` to `-1` in a development configuration to ignore this interval and always generate and store both - the `obisValue` and `obisActual` - when reading data
+**Hint:** Set `intervals.persistValuesMinutes` to `-1` in a development configuration to ignore this interval and always generate and store both - the `obisValue` and `obisActual` - when reading data.
 
 ## Running on a Raspberry Pi
 
