@@ -3,11 +3,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/github/workflow/status/tsmx/obis-reader/git-ci-build)](https://img.shields.io/github/workflow/status/tsmx/obis-reader/git-ci-build)
 
-A project demonstrating how to read OBIS data from a smart-meter and saving them into a MongoDB. Including simple steps to ship the solution to a Raspberry Pi and make it run as a systemd service.
+> Read OBIS data from your smart-meter and store it in a MongoDB.
+
+A simple service for reading OBIS data from a smart-meter and saving it into a MongoDB. Including simple steps to ship the solution to a Raspberry Pi and make it run as a systemd service.
 
 OBIS data is read and extracted using the great package [smartmeter-obis](https://www.npmjs.com/package/smartmeter-obis).
 
-A live example for creating a simple dashboard with the persisted OBIS data can be found here: [PowerBoard](https://powerboard.appspot.com).
+A live example of a simple dashboard with the persisted OBIS data can be found here: [PowerBoard](https://powerboard.appspot.com).
 
 ## Technical Equipment
 
