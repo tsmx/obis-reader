@@ -117,7 +117,7 @@ obis-reader is now running as a service.
 
 ## Further data usage examples
 
-By using MongoDB's query functions and aggregation framewrok, a lot of useful analysis of the persisted data can be done. Some useful examples...
+By using MongoDB's query functions and aggregation framework, a lot of useful analysis of the persisted data can be done. Some useful examples...
 
 ### Average power consumption for each hour of the day
 
