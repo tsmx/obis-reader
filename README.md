@@ -48,7 +48,9 @@ For easy and secure configuration I use [secure-config](https://www.npmjs.com/pa
 
 ## Running on a Raspberry Pi
 
-To run the OBIS reader on a Raspberry I suggest the following steps:
+To run the OBIS reader on a Raspberry I suggest the following steps. 
+
+Note that it is assumed to run in production mode on the Raspberry, thus we'll set the `NODE_ENV` environment variable accordingly and use `config-production.json` as the configuration file. So be sure to have this created and set-up properly.
 
 1. Connect to your Raspberry as `pi`.
    ```bash
@@ -72,9 +74,9 @@ To run the OBIS reader on a Raspberry I suggest the following steps:
    rsync -av -e ssh --exclude='node_modules/' obis-reader/ obis@raspberrypi:/home/obis/obis-reader
    ```
    Excluding the node_modules folder saves a LOT of time!
-6. On the Raspberry as user `obis` in `/home/obis/obis-reader` install the needed NodeJS packages.
+6. On the Raspberry as user `obis` in `/home/obis/obis-reader` install the needed NodeJS packages for productive use.
    ```bash
-   npm install
+   npm install --production
    ```
 7. Do a test run: 
    ```bash
