@@ -16,7 +16,7 @@
   "dependencies": {
     "@tsmx/secure-config": "^2.0.0",
     "mongoose": "^6.4.6",
-    "smartmeter-obis": "^2.3.0",
+    "smartmeter-obis": "^3.0.2",
     "winston": "^3.3.3"
   }
 }
