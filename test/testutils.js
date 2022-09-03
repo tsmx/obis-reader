@@ -29,21 +29,21 @@ module.exports = {
 
         var mongoServer = null;
 
-        async function beforeAll() {
+        beforeAll(async () => {
             mongoServer = await MongoMemoryServer.create({ dbName: dbname });
             return beforeAllTests(mongoServer, mongoose);
-        }
+        });
 
-        async function afterAll() {
+        afterAll(async () => {
             return afterAllTests(mongoServer, mongoose);
-        }
+        });
 
-        async function beforeEach() {
-            return beforeEachTest(loadDocuments);
-        }
+        beforeEach(async () => {
+            return beforeEachTest();
+        });
 
-        async function afterEach() {
+        afterEach(async () => {
             return afterEachTest();
-        }
+        });
     }
 };
