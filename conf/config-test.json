@@ -1,0 +1,18 @@
+{
+    "name": "DEV",
+    "database": {
+        "database": "obisdata",
+        "collectionValues": "obisvalues",
+        "collectionActuals": "obisactual"
+    },
+    "obis": {
+        "protocol": "SmlProtocol",
+        "transport": "LocalFileTransport",
+        "transportLocalFilePath": "./test/ed300l.dat",
+        "obisNameLanguage": "en",
+        "obisFallbackMedium": 6
+    },
+    "intervals": {
+        "persistValuesMinutes": -1
+    }
+}
