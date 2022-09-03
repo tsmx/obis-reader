@@ -3,11 +3,11 @@ const obisActualSchema = require('../schemas/obisActual');
 const obisValueSchema = require('../schemas/obisValue');
 const { setupTestDb } = require('./testutils');
 
-describe('Download test suite', () => {
+describe('OBIS data processing test suite', () => {
 
     setupTestDb('obisdata');
 
-    it('tests a successful processing of OBIS data', async () => {
+    it('tests a successful processing of a single OBIS data set', async () => {
         const actualBefore = await obisActualSchema.find({});
         expect(actualBefore.length).toBe(0);
         const valueBefore = await obisValueSchema.find({});
@@ -17,8 +17,16 @@ describe('Download test suite', () => {
         obisprocessing.stop();
         const actualTest = await obisActualSchema.find({});
         expect(actualTest.length).toBe(1);
+        expect(actualTest[0].deviceid).toBe('0901454d48000055ac49');
+        expect(actualTest[0].powerCurrent).toBe(108.4);
+        expect(actualTest[0].powerCurrentUnit).toBe('W');
         const valueTest = await obisValueSchema.find({});
         expect(valueTest.length).toBe(1);
+        expect(valueTest[0].deviceid).toBe('0901454d48000055ac49');
+        expect(valueTest[0].powerCurrent).toBe(108.4);
+        expect(valueTest[0].powerCurrentUnit).toBe('W');
+        expect(valueTest[0].powerSum).toBe(9031.6409);
+        expect(valueTest[0].powerSumUnit).toBe('kWh');
     });
 
 });
