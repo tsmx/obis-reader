@@ -3,6 +3,13 @@
   "version": "1.0.1",
   "description": "Read and persist Smart-Meter OBIS data to a MongoDB.",
   "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest",
+    "test-debug": "jest --verbose --runInBand --detectOpenHandles",
+    "test-coverage": "jest --coverage",
+    "test-ci": "jest"
+  },
   "keywords": [
     "smart-meter",
     "obis",

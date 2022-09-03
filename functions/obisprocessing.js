@@ -7,7 +7,7 @@ const obisActual = require('../schemas/obisActual');
 
 const OBIS_DEVID = '1-0:0.0.9';
 const OBIS_POWER_SUM = '1-0:1.8.0';
-const OBIS_POWER_CUR = '1-0:16.7.0'
+const OBIS_POWER_CUR = '1-0:16.7.0';
 
 var lastPersist = null;
 
@@ -51,7 +51,7 @@ async function processData(err, obisResult) {
     if (obisValueEntry) {
         obisValueEntry.deviceid = obisActualEntry.deviceid;
         obisValueEntry.powerCurrent = obisActualEntry.powerCurrent;
-        obisValueEntry.powerCurrentUnit = obisActualEntry.powerCurrentUnit
+        obisValueEntry.powerCurrentUnit = obisActualEntry.powerCurrentUnit;
         try {
             let obisValueDoc = await obisValueEntry.save();
             logger.info('ObisValueEntry saved with ID ' + obisValueDoc.id + '. (DEV_ID: ' + obisValueEntry.deviceid +

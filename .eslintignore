@@ -1,0 +1,2 @@
+# don't lint the JEST test files
+test/
