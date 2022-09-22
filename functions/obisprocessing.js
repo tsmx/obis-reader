@@ -59,6 +59,7 @@ async function processData(err, obisResult) {
                 ' SUM: ' + obisValueEntry.powerSum + obisValueEntry.powerSumUnit + ')');
         }
         catch (err) {
+            /* istanbul ignore next */
             logger.error(err.message);
         }
     }
@@ -68,6 +69,7 @@ async function processData(err, obisResult) {
             ' CUR: ' + obisActualEntry.powerCurrent + obisActualEntry.powerCurrentUnit + ')');
     }
     catch (err) {
+        /* istanbul ignore next */
         logger.error(err.message);
     }
 }
