@@ -1,0 +1,24 @@
+{
+    "name": "DEV",
+    "database": {
+        "protocol": "mongodb",
+        "server": "127.0.0.1",
+        "port": "27017",
+        "database": "obisdata",
+        "collectionValues": "obisvalues",
+        "collectionActuals": "obisactual",
+        "options": "",
+        "user": "ENCRYPTED|64f38bfa2a2de22f46b0ddf900a10d3f|b993ec368895f540f422806ebcb6e9b5",
+        "password": "ENCRYPTED|6d753fcd735ba7aac9c7c89566406a31|ba57c77254dd4ca1e76ba730fc3e6073"
+    },
+    "obis": {
+        "protocol": "SmlProtocol",
+        "transport": "LocalFileTransport",
+        "transportLocalFilePath": "./test/empty.dat",
+        "obisNameLanguage": "en",
+        "obisFallbackMedium": 6
+    },
+    "intervals": {
+        "persistValuesMinutes": -1
+    }
+}
