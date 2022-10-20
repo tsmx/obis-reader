@@ -10,6 +10,10 @@ const OBIS_POWER_SUM = '1-0:1.8.0';
 const OBIS_POWER_CUR = '1-0:16.7.0';
 
 var lastPersist = null;
+// needed for full test coverage
+if(process.env['NODE_ENV'] === 'test-actual-only') {
+    lastPersist = new Date();
+}
 
 async function processData(err, obisResult) {
     if (err) {
