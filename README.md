@@ -2,6 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/github/workflow/status/tsmx/obis-reader/git-ci-build)](https://img.shields.io/github/workflow/status/tsmx/obis-reader/git-ci-build)
+[![Coverage Status](https://coveralls.io/repos/github/tsmx/obis-reader/badge.svg?branch=master)](https://coveralls.io/github/tsmx/obis-reader?branch=master)
 
 > Read OBIS data from your smart-meter and store it in a MongoDB.
 
