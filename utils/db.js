@@ -29,10 +29,11 @@ function connect(cb) {
 }
 
 function shutdown() {
-    mongoose.connection.close(function () {
-        logger.info('Mongoose default connection disconnected through app termination');
-        process.exit(0);
-    });
+    mongoose.connection.close()
+        .then(() => {
+            logger.info('Mongoose default connection disconnected through app termination');
+            process.exit(0);
+        });
 }
 
 // If the Node process ends, close the Mongoose connection 

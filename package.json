@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@tsmx/secure-config": "^2.0.0",
-    "mongoose": "^6.4.6",
+    "mongoose": "^7.0.0",
     "smartmeter-obis": "^4.0.0",
     "winston": "^3.8.2"
   },
