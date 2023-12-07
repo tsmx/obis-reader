@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "jest": "^29.5.0",
-    "mongodb-memory-server": "^8.12.2"
+    "mongodb-memory-server": "^9.1.1"
   }
 }
