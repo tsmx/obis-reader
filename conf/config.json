@@ -8,8 +8,8 @@
         "collectionValues": "obisvalues",
         "collectionActuals": "obisactual",
         "options": "",
-        "user": "ENCRYPTED|64f38bfa2a2de22f46b0ddf900a10d3f|b993ec368895f540f422806ebcb6e9b5",
-        "password": "ENCRYPTED|6d753fcd735ba7aac9c7c89566406a31|ba57c77254dd4ca1e76ba730fc3e6073"
+        "user": "ENCRYPTED|a0cbb68751da3b4b76bb8ba414d7abb0|93246a16c94fce3362f770dc20f954c8",
+        "password": "ENCRYPTED|e3d009288a9ebcabfdcb0aa089bc20b5|f143b912065429e061fd60ce118b5668"
     },
     "obis": {
         "protocol": "SmlProtocol",

@@ -8,11 +8,15 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        node-version: '16.13.1'
+        node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run test-coverage
     - name: Coveralls
