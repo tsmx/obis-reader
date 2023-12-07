@@ -5,9 +5,7 @@ const dbconfig = require('../conf/config').database;
 const dbURI = dbconfig.protocol + '://' + dbconfig.server + (dbconfig.port ? (':' + dbconfig.port) : ('')) + '/' + dbconfig.database;
 const dbOptions = {
     user: dbconfig.user,
-    pass: dbconfig.password,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    pass: dbconfig.password
 };
 
 // Create the database connection 
