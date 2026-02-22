@@ -12,11 +12,7 @@ async function afterEachTest() {
 }
 
 async function beforeAllTests(server, mongoose) {
-    const dbOptions = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    };
-    await mongoose.connect(server.getUri(), dbOptions);
+    await mongoose.connect(server.getUri());
 }
 
 async function afterAllTests(server, mongoose) {
